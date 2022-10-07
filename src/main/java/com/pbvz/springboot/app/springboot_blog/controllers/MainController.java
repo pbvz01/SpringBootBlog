@@ -1,4 +1,4 @@
-package com.pbvz.springboot.app.springboot_blog.controller;
+package com.pbvz.springboot.app.springboot_blog.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
     @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("title", "Главная страница");
-        return "index";
+    public String defaultPage (Model model) {
+        return "home";
     }
 }
