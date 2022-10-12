@@ -3,8 +3,9 @@ package com.pbvz.springboot.app.springboot_blog.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "post")
+@Table(name = "post_table")
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
