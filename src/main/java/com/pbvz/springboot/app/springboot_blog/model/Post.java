@@ -3,7 +3,7 @@ package com.pbvz.springboot.app.springboot_blog.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "post_table")
+@Table(name = "post")
 public class Post {
 
     @Id
