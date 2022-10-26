@@ -11,48 +11,43 @@ public class BlogController {
     @Autowired
     private PostService postService;
 
-    @GetMapping("/blog")
-    public String blog (Model model) {
-        model.addAttribute("posts", postService.getPosts());
-        return "blog-main";
-    }
-
-    @GetMapping("/blog/add")
+    @GetMapping("/new-article")
     public String blogAdd() {
         return "blog-add";
     }
 
-    @GetMapping("/blog/{id}")
+    @PostMapping("/new-article")
+    public String blogPostAdd (@RequestParam String title, @RequestParam String anons,
+                               @RequestParam String full_text) {
+        postService.createPost(title, anons, full_text);
+        return "redirect:/";
+    }
+
+    @GetMapping("/article/{id}")
     public String blogReadArticle (@PathVariable(value = "id") long id, Model model) {
         model.addAttribute("post", postService.getPostById(id));
         return "blog-post";
     }
 
-    @GetMapping("/blog/{id}/edit")
+    @GetMapping("/article/{id}/editing")
     public String blogEdit (@PathVariable(value = "id") long id, Model model) {
         model.addAttribute("post", postService.getPostForEditById(id));
         return "blog-edit";
     }
 
-    @PostMapping("/blog/{id}/edit")
+    @PostMapping("/article/{id}/editing")
     public String blogEdit (@RequestParam String title, @RequestParam String anons,
                             @RequestParam String full_text, @PathVariable(value = "id") long id) {
 
         postService.editPostById(id, title, anons, full_text);
-        return "redirect:/blog" ;
+        return "redirect:/" ;
     }
 
-
-    @PostMapping("/blog/{id}/remove")
+    @DeleteMapping("list-articles/{id}")
     public String blogDelete (@PathVariable(value = "id") long id) {
         postService.deletePostById(id);
-        return "redirect:/blog";
+        return "redirect:/";
     }
 
-    @PostMapping("/blog/add")
-    public String blogPostAdd (@RequestParam String title, @RequestParam String anons,
-                               @RequestParam String full_text) {
-        postService.createPost(title, anons, full_text);
-        return "redirect:/blog";
-    }
+
 }

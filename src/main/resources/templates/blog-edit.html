@@ -10,7 +10,7 @@
 
   <div th:each="el : ${post}" class="container mt-5 mb-5">
     <h1>Changing the article</h1><br>
-    <form method="post">
+    <form action="article/{id}/editing" method="post">
       <textarea th:text="${el.title}" name="title" class="form-control"></textarea><br>
       <textarea th:text="${el.anons}" name="anons" class="form-control"></textarea><br>
       <textarea th:text="${el.full_text}" name="full_text"  class="form-control"></textarea><br>

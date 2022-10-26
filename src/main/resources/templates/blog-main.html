@@ -14,8 +14,8 @@
         <h3 th:text="${el.title}"></h3>
         <p th:text="${el.anons}"></p>
         <p><b>Views: </b><span th:text="${el.views}"></span></p>
-        <form th:action="'blog/' + ${el.id} + '/remove'" method="post">
-            <a th:href="'/blog/' + ${el.id} +'/edit'" class="btn btn-warning">Edit</a>
+        <form th:action="'list-articles/' + ${el.id}" method="post">
+            <a th:href="'/article/' + ${el.id} +'/editing'" class="btn btn-warning">Edit</a>
             <button type="submit" class="btn btn-warning">Delete</button>
         </form>
     </div>
