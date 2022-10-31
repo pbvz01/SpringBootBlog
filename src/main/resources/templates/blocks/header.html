@@ -14,8 +14,8 @@
                         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                             <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
                             <li><a href="/new-article" class="nav-link px-2 text-white">Create an article</a></li>
-                            <li sec:authorize access="hasRole('ROLE_ADMIN')"><a href="/list-articles" class="nav-link px-2 text-white">Articles from User</a></li>
-                            <li><a href="#" class="nav-link px-2 text-white">My profile</a></li>
+                            <li sec:authorize ="hasRole('ADMIN')"><a href="/list-articles" class="nav-link px-2 text-white">Articles from User</a></li>
+                            <li sec:authorize="hasRole('USER')"><a href="/profile" class="nav-link px-2 text-white">My profile</a></li>
                             <li><a href="#" class="nav-link px-2 text-white">App's info</a></li>
                         </ul>
 

@@ -1,27 +1,41 @@
 package com.pbvz.springboot.app.springboot_blog.service;
 
 import com.pbvz.springboot.app.springboot_blog.model.Post;
+import com.pbvz.springboot.app.springboot_blog.model.User;
 import com.pbvz.springboot.app.springboot_blog.repsitory.PostRepository;
+import com.pbvz.springboot.app.springboot_blog.service.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Service
 public class PostService {
     @Autowired
+    UserService userService;
+    @Autowired
+    SecurityService securityService;
+    @Autowired
     private PostRepository postRepository;
-    public List<Post> getPosts() {
-        Iterable<Post> posts = postRepository.findAll();
-        List<Post> postList = new ArrayList<>();
-        posts.forEach(x -> postList.add(x));
-        Collections.reverse(postList);
-        return postList;
+
+    public List<Post> findPostsByUserAndCheckIsTrue(User user) {
+        user = securityService.getUserSession();
+        return postRepository.findPostsByUserAndCheckIsTrue(user);
     }
-    public Post getPostById (long id) {
-        // параллельность
+
+   public List<Post> findPostsByCheck(boolean check) {
+        List<Post> list = postRepository.findPostsByCheck(check);
+        Collections.reverse(list);
+        return list;
+   }
+
+   public void changeCheckToPost(long id) {
+       Post post = postRepository.findById(id).get();
+       post.setCheck(true);
+       postRepository.save(post);
+   }
+    public Post getPostByIdForUser(long id) {
         Post post = postRepository.findById(id).get();
         post.setViews(post.getViews() + 1);
         postRepository.save(post);
@@ -36,9 +50,12 @@ public class PostService {
         post.setTitle(title);
         post.setAnons(anons);
         post.setFull_text(full_text);
+        postRepository.save(post);
     }
     public void createPost(String title, String anons, String full_text) {
         Post post = new Post(title, anons, full_text);
+        User user = securityService.getUserSession();
+        user.addNewPost(post);
         postRepository.save(post);
     }
     public void deletePostById(long id) {

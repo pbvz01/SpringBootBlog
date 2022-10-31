@@ -40,6 +40,7 @@
                                     </a>
                                 </div>
                                 <small th:text="'Просмотры: ' + ${el.views}" class="text-muted"></small>
+                                <small th:text="'Автор: ' + ${el.getUser().getLogin()}" class="text-muted"></small>
                             </div>
                         </div>
                     </div>

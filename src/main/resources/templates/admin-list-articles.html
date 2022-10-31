@@ -13,9 +13,12 @@
     <div th:each="el : ${posts}" class="alert alert-info mt-5 mb-5">
         <h3 th:text="${el.title}"></h3>
         <p th:text="${el.anons}"></p>
-        <p><b>Views: </b><span th:text="${el.views}"></span></p>
-        <form th:action="'list-articles/' + ${el.id}" method="post">
-            <a th:href="'/article/' + ${el.id} +'/editing'" class="btn btn-warning">Edit</a>
+        <p th:text="${el.getUser().getLogin()}"></p>
+        <form th:action="'/list-articles/' + ${el.id}" method="post">
+            <button type="submit" class="btn btn-warning">Add to home page</button>
+        </form>
+        <a th:href="'list-articles/check-article/' + ${el.id}" class="btn btn-warning">Check</a>
+        <form th:action="'/list-articles/' + ${el.id} + '/delete'" method="post">
             <button type="submit" class="btn btn-warning">Delete</button>
         </form>
     </div>

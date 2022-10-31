@@ -7,10 +7,8 @@
 </head>
 <body class="text-center">
 <main class="form-signin w-100 m-auto">
-  <form th:object="${userForm}"
-          action="/login" method="post" style="margin: 0 auto; margin-top: 150px; max-width: 350px">
+  <form action="/login" method="post" style="margin: 0 auto; margin-top: 150px; max-width: 350px">
     <h1 class="h3 mb-3 fw-normal mt-5 mb-5">Please sign in</h1>
-
       <div class="form-floating mb-3">
         <input type="text" name = "username" class="form-control" id="floatingInput" placeholder="Login">
         <label for="floatingInput">Login</label>

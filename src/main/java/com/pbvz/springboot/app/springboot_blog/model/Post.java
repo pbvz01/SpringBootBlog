@@ -5,12 +5,24 @@ import javax.persistence.*;
 @Entity
 @Table(name = "post")
 public class Post {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title, anons, full_text;
+    @Column(name = "tittle")
+    private String title;
+    @Column(name = "anons")
+    private String anons;
+    @Column(name = "full_text")
+    private String full_text;
+    @Column(name = "check_admin",
+    nullable = false)
+    private Boolean check = false;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @Column(name = "views")
     private int views;
+
 
     public Post () {}
 
@@ -58,5 +70,20 @@ public class Post {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getCheck() {
+        return check;
+    }
+    public void setCheck(Boolean check) {
+        this.check = check;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

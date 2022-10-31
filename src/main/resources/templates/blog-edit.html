@@ -8,13 +8,13 @@
 <body>
   <div th:insert="blocks/header :: header"/>
 
-  <div th:each="el : ${post}" class="container mt-5 mb-5">
+  <div th:object="${post}" class="container mt-5 mb-5">
     <h1>Changing the article</h1><br>
-    <form action="article/{id}/editing" method="post">
-      <textarea th:text="${el.title}" name="title" class="form-control"></textarea><br>
-      <textarea th:text="${el.anons}" name="anons" class="form-control"></textarea><br>
-      <textarea th:text="${el.full_text}" name="full_text"  class="form-control"></textarea><br>
-      <button type="submit" class="btn btn-success">To change</button><br>
+    <form th:action="'/list-articles/' + ${post.id} + '/edit'" method="post">
+      <textarea th:text="${post.title}" name="title" class="form-control"></textarea><br>
+      <textarea th:text="${post.anons}" name="anons" class="form-control"></textarea><br>
+      <textarea th:text="${post.full_text}" name="full_text"  class="form-control"></textarea><br>
+      <button type="submit" class="btn btn-success">Change</button><br>
     </form>
 
   </div>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Статья</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" />
+</head>
+<body>
+  <div th:insert="blocks/header :: header"/>
+
+  <div th:object="${post}" class="container mt-5 mb-5">
+      <h1 th:text="${post.title}"></h1><br>
+      <h4 th:text="${post.anons}"></h4><br>
+      <p th:text="${post.full_text}"></p><br>
+
+      <div sec:authorize="hasRole('ADMIN')" class="container">
+
+          <a th:href="'/list-articles/' + ${post.id} + '/edit'" class="btn btn-warning"> Edit </a>
+          </form>
+          <form th:action="'/list-articles/' + ${post.id} + '/delete'"
+                method="post">
+              <button class="btn btn-warning" type="submit">
+                  Delete
+              </button>
+          </form>
+
+      </div>
+
+  </div>
+
+  <div th:insert="blocks/footer :: footer"/>
+</body>
+</html>

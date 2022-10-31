@@ -1,6 +1,8 @@
 package com.pbvz.springboot.app.springboot_blog.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -12,19 +14,30 @@ public class User {
     private String login;
     @Column(name = "password")
     private String password;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "surname")
+    private String surname;
     @Transient
     private String passwordConfirm;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "last_name")
-    private String lastName;
+    @OneToMany(mappedBy = "user",
+            cascade =
+            {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    private List<Post> posts;
 
     @ManyToOne(cascade =
             {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "role_id")
     private Role role;
+
+    public void addNewPost(Post post) {
+        if (posts == null) {
+            posts = new ArrayList<>();
+        }
+        posts.add(post);
+        post.setUser(this);
+    }
 
     public Long getId() {
         return id;
@@ -58,12 +71,20 @@ public class User {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public Role getRole() {
@@ -82,16 +103,5 @@ public class User {
         this.passwordConfirm = passwordConfirm;
     }
 
-    @Override
-    public String toString() {
-        return "User {" +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", passwordConfirm='" + passwordConfirm + '\'' +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", role=" + role +
-                '}';
-    }
 }
 

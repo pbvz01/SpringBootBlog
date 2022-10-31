@@ -1,15 +1,19 @@
 package com.pbvz.springboot.app.springboot_blog.service.security;
 
+import com.pbvz.springboot.app.springboot_blog.model.User;
+import com.pbvz.springboot.app.springboot_blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SecurityServiceIml implements SecurityService {
-
+public class SecurityServiceImpl implements SecurityService {
+    @Autowired
+    UserService userService;
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -23,6 +27,16 @@ public class SecurityServiceIml implements SecurityService {
             return ((UserDetails) userDetails).getUsername();
         }
         return null;
+    }
+
+    @Override
+    public User getUserSession() {
+        return userService.findByLogin(getCurrentUsername());
+    }
+
+    private String getCurrentUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
     }
 
     @Override

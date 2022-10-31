@@ -25,29 +25,11 @@ public class BlogController {
 
     @GetMapping("/article/{id}")
     public String blogReadArticle (@PathVariable(value = "id") long id, Model model) {
-        model.addAttribute("post", postService.getPostById(id));
-        return "blog-post";
-    }
-
-    @GetMapping("/article/{id}/editing")
-    public String blogEdit (@PathVariable(value = "id") long id, Model model) {
-        model.addAttribute("post", postService.getPostForEditById(id));
-        return "blog-edit";
-    }
-
-    @PostMapping("/article/{id}/editing")
-    public String blogEdit (@RequestParam String title, @RequestParam String anons,
-                            @RequestParam String full_text, @PathVariable(value = "id") long id) {
-
-        postService.editPostById(id, title, anons, full_text);
-        return "redirect:/" ;
-    }
-
-    @DeleteMapping("list-articles/{id}")
-    public String blogDelete (@PathVariable(value = "id") long id) {
-        postService.deletePostById(id);
-        return "redirect:/";
+        model.addAttribute("post", postService.getPostByIdForUser(id));
+        return "article";
     }
 
 
 }
+
+
